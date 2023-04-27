@@ -62,9 +62,4 @@ public class RefreshTokenService {
                 })
                 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!"));
     }
-
- /*   @Transactional
-    public int deleteByUserId(Long userId) {
-        return refreshTokenRepository.deleteByUser(userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found!")));
-    }*/
 }

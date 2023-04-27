@@ -1,6 +1,7 @@
 package bgpersonnel.budget.service.csv;
 
 import com.opencsv.CSVWriter;
+import com.opencsv.ICSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -18,16 +19,16 @@ public class CsvGeneratorImpl<T> implements CsvGenerator<T> {
         // Créer le contenu du rapport CSV en utilisant OpenCSV
         StringWriter writer = new StringWriter();
 
-        CSVWriter csvWriter = new CSVWriter(writer, CSVWriter.DEFAULT_SEPARATOR,
-                CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                CSVWriter.DEFAULT_LINE_END);
+        CSVWriter csvWriter = new CSVWriter(writer, ICSVWriter.DEFAULT_SEPARATOR,
+                ICSVWriter.NO_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                ICSVWriter.DEFAULT_LINE_END);
 
         csvWriter.writeNext(header);
 
         // Écrire les données sans inclure le header automatique skip les noms des colonnes
         StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(csvWriter)
-                .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
-                .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                .withSeparator(ICSVWriter.DEFAULT_SEPARATOR)
+                .withQuotechar(ICSVWriter.NO_QUOTE_CHARACTER)
                 .withOrderedResults(false)
                 .build();
 

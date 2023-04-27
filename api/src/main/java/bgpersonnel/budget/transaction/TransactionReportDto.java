@@ -1,6 +1,5 @@
 package bgpersonnel.budget.transaction;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
