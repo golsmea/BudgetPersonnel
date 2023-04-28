@@ -1,7 +1,5 @@
 package bgpersonnel.budget.authentification.mangeruser;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import bgpersonnel.budget.authentification.common.entity.User;
 import bgpersonnel.budget.authentification.common.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +9,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class UserUpdateServiceImplTest {
+class UserUpdateServiceImplTest {
 
     @Mock
     private UserService userService;
@@ -30,7 +30,7 @@ public class UserUpdateServiceImplTest {
     }
 
     @Test
-    public void testUpdateUserInfo() {
+    void testUpdateUserInfo() {
         // Mock userUpdateRequest
         UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
         userUpdateRequest.setName("John");
@@ -54,7 +54,7 @@ public class UserUpdateServiceImplTest {
     }
 
     @Test
-    public void testUpdatePassword() {
+    void testUpdatePassword() {
         // Mock updatedPassword
         UpdatedPassword updatedPassword = new UpdatedPassword();
         updatedPassword.setOldPassword("oldPassword");
@@ -78,7 +78,7 @@ public class UserUpdateServiceImplTest {
     }
 
     @Test
-    public void testUpdatePasswordWithNotCorrectPassword() {
+    void testUpdatePasswordWithNotCorrectPassword() {
         // Mock updatedPassword
         UpdatedPassword updatedPassword = new UpdatedPassword();
         updatedPassword.setOldPassword("oldPasswordNotCorrect");

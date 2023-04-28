@@ -1,5 +1,6 @@
 package bgpersonnel.budget.service.excel;
 
+import bgpersonnel.budget.exeception.GenerationRapportException;
 import bgpersonnel.budget.service.GeneratorHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,8 +19,6 @@ import java.util.List;
 @Slf4j
 public class ExcelGeneratorImpl<T> implements ExcelGenerator<T> {
 
-    private Workbook workbook;
-
     private static void createHeaders(String[] headers, Sheet sheet) {
         // Create the first row for headers
         Row headerRow = sheet.createRow(0);
@@ -32,7 +31,7 @@ public class ExcelGeneratorImpl<T> implements ExcelGenerator<T> {
     @Override
     public ByteArrayInputStream generateExcel(List<T> data, String[] headers) {
         try {
-            workbook = new SXSSFWorkbook(); // Use SXSSFWorkbook for batch writing
+            Workbook workbook = new SXSSFWorkbook(); // Use SXSSFWorkbook for batch writing
             Sheet sheet = workbook.createSheet("Sheet1");
             createHeaders(headers, sheet);
             write(data, sheet);
@@ -47,19 +46,20 @@ public class ExcelGeneratorImpl<T> implements ExcelGenerator<T> {
 
             return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
         } catch (Exception e) {
-            throw new RuntimeException("fail to import data to Excel file: " + e.getMessage());
+            log.error("Error generating Excel file: " + e.getMessage());
+            throw new GenerationRapportException("fail to import data to Excel file: " + e.getMessage());
         }
     }
 
     private void write(List<T> data, Sheet sheet) {
         int rowCount = 1;
-        for (T record : data) {
+        for (T recordObject : data) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
-            for (Field field : record.getClass().getDeclaredFields()) {
+            for (Field field : recordObject.getClass().getDeclaredFields()) {
                 String fieldName = field.getName();
-                // Get the value of the field from the object record
-                Object fieldValue = GeneratorHelper.getFieldValueFromObject(record, fieldName);
+                // Get the value of the field from the object recordObject
+                Object fieldValue = GeneratorHelper.getFieldValueFromObject(recordObject, fieldName);
                 // Insert the value of the field in the Excel sheet cell
                 Cell cell = row.createCell(columnCount++);
                 cell.setCellValue(fieldValue != null ? String.valueOf(fieldValue) : "");

@@ -2,6 +2,7 @@ package bgpersonnel.budget.reporting;
 
 
 import bgpersonnel.budget.authentification.common.services.UserService;
+import bgpersonnel.budget.exeception.TypeRapportNotFoundException;
 import bgpersonnel.budget.service.csv.CsvGenerator;
 import bgpersonnel.budget.service.excel.ExcelGenerator;
 import bgpersonnel.budget.service.pdf.PdfGenerator;
@@ -31,7 +32,7 @@ class ReportingServiceImpl implements ReportingService {
     }
 
     @Override
-    public ByteArrayInputStream generateReport(ReportRequest reportRequest) {
+    public ByteArrayInputStream generateReport(ReportRequest reportRequest) throws TypeRapportNotFoundException {
 
         Long userId = UserService.getIdConnectedUser();
         List<TransactionReportDto> transactions = transactionRepository.getTransactionsByUserBetweenDatesAndCategory(userId, reportRequest.getStartDate(), reportRequest.getEndDate(), reportRequest.getCategoryId());
@@ -40,7 +41,7 @@ class ReportingServiceImpl implements ReportingService {
             case CSV -> csvGenerator.generateCSV(transactions, header);
             case XLS -> excelGenerator.generateExcel(transactions, header);
             case PDF -> pdfGenerator.generatePdf(transactions, "/report.html", header);
-            default -> throw new IllegalStateException("Unexpected value: " + reportRequest.getReportType());
+            default -> throw new TypeRapportNotFoundException("Le type de rapport demandé n'existe pas" + reportRequest.getReportType());
         };
 
     }

@@ -1,7 +1,6 @@
 package bgpersonnel.budget.authentification.security;
 
 import bgpersonnel.budget.authentification.security.services.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,21 +15,21 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableGlobalMethodSecurity(
-        // securedEnabled = true,
-        // jsr250Enabled = true,
-        prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
     private static final String[] PUBLIC_PATHS = {"/api/auth/**",
             "/v3/api-docs.yaml",
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html"};
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
     private AuthEntryPointJwt unauthorizedHandler;
+
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, AuthEntryPointJwt unauthorizedHandler) {
+        this.userDetailsService = userDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -65,8 +64,6 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/test/**").permitAll()
-                .requestMatchers("/api/reports").permitAll()
-                .requestMatchers("/api/reports/generate-pdf").permitAll()
                 .requestMatchers(PUBLIC_PATHS).permitAll()
                 .anyRequest().authenticated();
 

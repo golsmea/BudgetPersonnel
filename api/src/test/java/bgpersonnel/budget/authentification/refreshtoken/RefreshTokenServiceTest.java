@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class RefreshTokenServiceTest {
+class RefreshTokenServiceTest {
 
     @Mock
     private RefreshTokenRepository refreshTokenRepository;
@@ -35,13 +35,13 @@ public class RefreshTokenServiceTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-       ReflectionTestUtils.setField(refreshTokenService, "refreshTokenDurationMs", 60000L);
+        ReflectionTestUtils.setField(refreshTokenService, "refreshTokenDurationMs", 60000L);
 
     }
 
     @DisplayName("find refresh token by token")
     @Test
-    public void testFindByToken() {
+    void testFindByToken() {
         String token = "testToken";
         RefreshToken refreshToken = new RefreshToken();
         when(refreshTokenRepository.findByToken(token)).thenReturn(Optional.of(refreshToken));
@@ -52,7 +52,7 @@ public class RefreshTokenServiceTest {
 
     @DisplayName("create refresh token")
     @Test
-    public void testCreateRefreshToken() {
+    void testCreateRefreshToken() {
         Long userId = 1L;
         RefreshToken refreshToken = new RefreshToken();
         when(userRepository.findById(userId)).thenReturn(Optional.of(new User()));
@@ -65,7 +65,7 @@ public class RefreshTokenServiceTest {
 
     @DisplayName("check if refresh not expired")
     @Test
-    public void testVerifyExpiration_ValidToken() {
+    void testVerifyExpiration_ValidToken() {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setExpiryDate(Instant.now().plusMillis(1000L)); // set expiry date in future
         RefreshToken result = refreshTokenService.verifyExpiration(refreshToken);
@@ -74,7 +74,7 @@ public class RefreshTokenServiceTest {
 
     @DisplayName("check if refresh token expired")
     @Test
-    public void testVerifyExpiration_ExpiredToken() {
+    void testVerifyExpiration_ExpiredToken() {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setExpiryDate(Instant.now().minusMillis(1000L)); // set expiry date in past
         assertThrows(TokenRefreshException.class, () -> refreshTokenService.verifyExpiration(refreshToken));
@@ -82,7 +82,7 @@ public class RefreshTokenServiceTest {
     }
 
     @Test
-    public void testRefreshToken_ValidToken() {
+    void testRefreshToken_ValidToken() {
         String refreshToken = "testRefreshToken";
         User user = new User();
         RefreshToken token = new RefreshToken();
@@ -104,7 +104,7 @@ public class RefreshTokenServiceTest {
     }
 
     @Test
-    public void testRefreshToken_ExpiredToken() {
+    void testRefreshToken_ExpiredToken() {
         String refreshToken = "testRefreshToken";
         RefreshToken token = new RefreshToken();
         token.setExpiryDate(Instant.now().minusMillis(1000L)); // set expiry date in past

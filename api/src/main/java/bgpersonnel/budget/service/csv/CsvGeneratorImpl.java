@@ -1,5 +1,6 @@
 package bgpersonnel.budget.service.csv;
 
+import bgpersonnel.budget.exeception.GenerationRapportException;
 import com.opencsv.CSVWriter;
 import com.opencsv.ICSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -39,7 +40,7 @@ public class CsvGeneratorImpl<T> implements CsvGenerator<T> {
         } catch (Exception e) {
             // Gérer les exceptions
             log.error("Erreur lors de la génération du fichier CSV", e);
-            return null;
+            throw new GenerationRapportException("Erreur lors de la génération du fichier CSV: " + e.getMessage());
         }
 
     }

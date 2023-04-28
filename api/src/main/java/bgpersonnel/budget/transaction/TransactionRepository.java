@@ -19,11 +19,16 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findByCategoryAndDateTransactionBetween(Category category, LocalDateTime dateDebut, LocalDateTime dateFin);
 
     List<Transaction> findByDateTransactionAndUser(LocalDateTime localDateTime, User user);
-    List<Transaction> findByDateTransactionAndUser(LocalDateTime localDateTime, Long userId);
 
-    // find all transactions by user between two dates and by category and category is optional use TransactionReportDto
-
-    //@Query("SELECT  FROM Transaction t WHERE t.user.id = ?1 AND t.dateTransaction BETWEEN ?2 AND ?3 AND (t.category.id = ?4 OR ?4 IS NULL)")
+    /**
+     * Cette méthode permet de récupérer les transactions d'un utilisateur entre deux dates et d'une catégorie
+     *
+     * @param userId     l'id de l'utilisateur
+     * @param startDate  la date de début
+     * @param endDate    la date de fin
+     * @param categoryId l'id de la catégorie
+     * @return la liste des transactions
+     */
     @Query("SELECT new bgpersonnel.budget.transaction.TransactionReportDto("
             + "c.name, t.dateTransaction, t.amount, t.description, "
             + "t.typeTransaction) "

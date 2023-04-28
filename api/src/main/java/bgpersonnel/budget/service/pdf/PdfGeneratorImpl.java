@@ -1,6 +1,7 @@
 package bgpersonnel.budget.service.pdf;
 
 
+import bgpersonnel.budget.exeception.GenerationRapportException;
 import com.itextpdf.html2pdf.HtmlConverter;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class PdfGeneratorImpl<T> implements PdfGenerator<T> {
     }
 
     @Override
-    public ByteArrayInputStream generatePdf(List<T> data, String templateHtml,String[] header) {
+    public ByteArrayInputStream generatePdf(List<T> data, String templateHtml, String[] header) {
 
         // Créez un contexte Freemarker pour remplir le modèle
         Map<String, Object> context = new HashMap<>();
@@ -44,8 +45,8 @@ public class PdfGeneratorImpl<T> implements PdfGenerator<T> {
             HtmlConverter.convertToPdf(htmlContent, outputStream);
             return new ByteArrayInputStream(outputStream.toByteArray());
         } catch (Exception e) {
-            log.error("error", e);
-            return null;
+            log.error("Erreur lors de la génération du fichier PDF", e);
+            throw new GenerationRapportException("Erreur lors de la génération du fichier PDF: " + e.getMessage());
         }
 
     }

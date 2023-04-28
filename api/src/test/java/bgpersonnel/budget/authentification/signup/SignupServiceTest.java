@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class SignupServiceTest {
+class SignupServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -44,7 +44,7 @@ public class SignupServiceTest {
     private SignupRequest signUpRequest;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         signupService = new SignupService(userRepository, roleRepository, encoder, jwtUtils);
         when(encoder.encode(anyString())).thenReturn("encodedPassword");
@@ -56,7 +56,7 @@ public class SignupServiceTest {
 
     @DisplayName("if user with the same email does not exist, save the user")
     @Test
-    public void test_register_user_with_valid_data_Success() {
+    void test_register_user_with_valid_data_Success() {
         //given
         signUpRequest.setRole(Collections.singleton("user"));
         //when
@@ -69,7 +69,7 @@ public class SignupServiceTest {
 
     @DisplayName("if user with the same email already exists, throw AlreadyExistsException")
     @Test
-    public void test_register_user_with_existing_email_failed() {
+    void test_register_user_with_existing_email_failed() {
         //given
         signUpRequest.setRole(Collections.singleton("user"));
         //when
@@ -82,7 +82,7 @@ public class SignupServiceTest {
 
     @DisplayName("user with role admin can be registered")
     @Test
-    public void test_register_user_with_valide_role_admin_success() {
+    void test_register_user_with_valide_role_admin_success() {
         //given
         signUpRequest.setRole(Collections.singleton("admin"));
         //when
@@ -96,7 +96,7 @@ public class SignupServiceTest {
 
     @DisplayName("user with role roleNotExists cannot be registered")
     @Test
-    public void test_register_user_with_invalid_role_failed() {
+    void test_register_user_with_invalid_role_failed() {
         //given
         signUpRequest.setRole(Collections.singleton("roleNotExists"));
         //when
@@ -109,7 +109,7 @@ public class SignupServiceTest {
 
     @DisplayName("user without role can be registered")
     @Test
-    public void test_register_user_without_role_success() {
+    void test_register_user_without_role_success() {
         //when
         when(userRepository.existsByEmail(anyString())).thenReturn(false);
         when(roleRepository.findByName(any(ERole.class))).thenReturn(Optional.of(new Role(1, ERole.ROLE_USER)));

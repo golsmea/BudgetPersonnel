@@ -42,7 +42,7 @@ public class ReportingServiceImplTest {
 
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // Creating a ReportRequest object
         LocalDate startDate = LocalDate.of(2022, 1, 1);
         LocalDate endDate = LocalDate.of(2022, 12, 31);
@@ -58,7 +58,7 @@ public class ReportingServiceImplTest {
 
     // test generateCsvReport
     @Test
-    public void generateCsvReportTest() {
+    void generateCsvReportTest() {
         this.reportRequest.setReportType(ETypeReport.CSV);
         //given
         ByteArrayInputStream csvInputStream = new ByteArrayInputStream("test".getBytes());
@@ -82,7 +82,7 @@ public class ReportingServiceImplTest {
     }
 
     @Test
-    public void generateXlsReportTest() {
+    void generateXlsReportTest() {
 
         //given
         this.reportRequest.setReportType(ETypeReport.XLS);
@@ -107,14 +107,14 @@ public class ReportingServiceImplTest {
     }
 
     @Test
-    public void generatePdfReportTest() {
+    void generatePdfReportTest() {
         //given
         this.reportRequest.setReportType(ETypeReport.PDF);
         ByteArrayInputStream xlsInputStream = new ByteArrayInputStream("test".getBytes());
         //when
         when(transactionRepository.getTransactionsByUserBetweenDatesAndCategory(anyLong(), any(), any(), anyLong()))
                 .thenReturn(transactions);
-        when(pdfGenerator.generatePdf(anyList(), any(),any())).thenReturn(xlsInputStream);
+        when(pdfGenerator.generatePdf(anyList(), any(), any())).thenReturn(xlsInputStream);
 
         try (MockedStatic<UserService> utilities = Mockito.mockStatic(UserService.class)) {
             utilities.when(UserService::getIdConnectedUser).thenReturn(1L);
