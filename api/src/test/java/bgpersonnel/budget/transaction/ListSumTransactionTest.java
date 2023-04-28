@@ -18,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
@@ -59,7 +60,7 @@ public class ListSumTransactionTest {
         this.transaction = new Transaction();
         this.transaction.setId(1L);
         this.transaction.setAmount(275.0);
-        this.transaction.setDateTransaction(LocalDateTime.now());
+        this.transaction.setDateTransaction(LocalDate.now());
         this.transaction.setTypeTransaction(TypeTransaction.DEPENSE);
         this.transaction.setDescription("Transaction test unitaire");
 
@@ -87,7 +88,7 @@ public class ListSumTransactionTest {
         transaction1.setAmount(75.5);
         transaction1.setCategory(category);
         transaction1.setTypeTransaction(TypeTransaction.REVENU);
-        transaction1.setDateTransaction(LocalDateTime.of(2023, 04, 23, 11, 55));
+        transaction1.setDateTransaction(LocalDate.of(2023, 04, 23));
 
         List<Transaction> transactionListCategory2023 = new ArrayList<>();
         transactionListCategory2023.add(transaction1);
@@ -100,13 +101,13 @@ public class ListSumTransactionTest {
         transaction2.setAmount(175.5);
         transaction2.setCategory(category);
         transaction2.setTypeTransaction(TypeTransaction.DEPENSE);
-        transaction2.setDateTransaction(LocalDateTime.of(2023, 03, 23, 11, 55));
+        transaction2.setDateTransaction(LocalDate.of(2023, 03, 23));
 
         Transaction transaction3 = new Transaction();
         transaction3.setAmount(75.5);
         transaction3.setCategory(category);
         transaction3.setTypeTransaction(TypeTransaction.DEPENSE);
-        transaction3.setDateTransaction(LocalDateTime.of(2023, 04, 23, 11, 55));
+        transaction3.setDateTransaction(LocalDate.of(2023, 04, 23));
 
         List<Transaction> transactionListCategory2Year2023 = new ArrayList<>();
         transactionListCategory2Year2023.add(transaction2);
