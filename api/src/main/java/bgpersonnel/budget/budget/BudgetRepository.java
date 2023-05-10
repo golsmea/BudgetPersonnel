@@ -12,8 +12,6 @@ import java.util.Map;
 
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget, Long>{
-    Budget findByName(String name);
-    List<Budget> findByUser(Long id);
 
     @Query(value = "SELECT SUM(CASE WHEN t.typeTransaction = 'REVENU' THEN t.amount ELSE 0 END) - SUM(CASE WHEN t.typeTransaction = 'EPARGNE' OR t.typeTransaction = 'DEPENSE' THEN t.amount ELSE 0 END) "
             + "FROM Transaction t "

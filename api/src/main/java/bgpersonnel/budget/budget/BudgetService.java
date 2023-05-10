@@ -28,80 +28,163 @@ public class BudgetService {
 
     // CRUD operations
 
+    /**
+     * Create a new budget
+     * @param budget to create
+     * @return the created budget
+     */
     public Budget create(Budget budget) {
         return budgetRepository.save(budget);
     }
 
+    /**
+     * Find a budget by its id
+     * @param id of the budget
+     * @return the budget corresponding to the id
+     */
     public Budget findById(Long id) {
         return budgetRepository.findById(id).get();
     }
 
+    /**
+     * Find all budgets
+     * @return all budgets
+     */
     public Iterable<Budget> findAll() {
         return budgetRepository.findAll();
     }
 
+    /**
+     * Update a budget
+     * @param budget to update
+     * @return the updated budget
+     */
     public Budget update(Budget budget) {
         return budgetRepository.save(budget);
     }
 
+    /**
+     * Delete a budget by its id
+     * @param id of the budget to delete
+     */
     public void deleteById(Long id) {
         budgetRepository.deleteById(id);
     }
 
-    public List<Budget> findByUser(Long id) {
-        return budgetRepository.findByUser(id);
-    }
 
+    /**
+     * calculate the real annual global budget for a year
+     * @param year of the budget
+     * @return the real annual global budget that corresponds to the year
+     */
     public double calculateAnnualGlobalBudgetForYear( Integer year) {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.calculateAnnualGlobalBudgetForYear(year,userId );
     }
 
+    /**
+     * calculate the real global budget
+     * @return the real global budget
+     */
     public double calculateGlobalBudget() {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.calculateGlobalBudget(userId );
     }
 
+
+    /**
+     * calculate the real global budget for each year
+     * @return the real global budget for each year
+     */
     public List<Map<String, Object>> getTotalAnnualBudgetsByYearAndUser() {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.getTotalAnnualBudgetsByYearAndUser(userId );
     }
+
+    /**
+     * calculate the real monthly global budget for a year and a month
+     * @param month of the budget
+     * @param year of the budget
+     * @return the real monthly global budget that corresponds to the year and the month
+     */
     public Double calculateMonthlyGlobalBudgetForYearAndMonth( Integer month, Integer year) {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.calculateMonthlyGlobalBudgetForYearAndMonth(userId, month, year);
     }
 
+
+    /**
+     * calculate the real monthly global budget for each month of this year
+     * @param year of the budget
+     * @return the real monthly global budget for each month of this year
+     */
     public List<Map<String, Object>> calculateMonthlyGlobalBudgetForYear( Integer year) {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.calculateMonthlyGlobalBudgetForYear(year,userId );
     }
 
+    /**
+     * calculate the real monthly global budget for each month of this year
+     * @param year of the budget
+     * @param budgetId of the budget
+     * @return the real monthly global budget for each month of this year
+     */
     public List<Map<String, Object>> calculateMonthlyBudgetForYearAndCategory(Integer year, Long budgetId) {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.calculateMonthlyBudgetForYearAndCategory(year, userId, budgetId);
     }
 
+    /**
+     * calculate the real monthly global budget for each month of this year
+     * @param month of the budget
+     * @param year of the budget
+     * @param budgetId of the budget
+     * @return the real monthly global budget for each month of this year
+     */
     public Double calculateMonthlyBudgetForYearAndMonthAndCategory( Integer month, Integer year, Long budgetId) {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.calculateMonthlyBudgetForYearAndMonthAndCategory(userId, month, year, budgetId);
     }
 
+    /**
+     * calculate the real monthly global budget for each month of this year
+     * @param budgetId of the budget
+     * @return the real monthly global budget for each month of this year
+     */
     public List<Map<String, Object>> getTotalAnnualBudgetsByYearAndUserAndCategory( Long budgetId) {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.getTotalAnnualBudgetsByYearAndUserAndCategory(userId, budgetId);
     }
 
+
+    /**
+     * calculate the real monthly global budget for each month of this year
+     * @param year of the budget
+     * @param budgetId of the budget
+     * @return the real monthly global budget for each month of this year
+     */
     public Double calculateAnnualBudgetForYearAndCategory(Integer year, Long budgetId) {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.calculateAnnualBudgetForYearAndCategory(year, userId, budgetId);
     }
 
+
+    /**
+     * calculate the budget for a category
+     * @param budgetId of the budget
+     * @return the budget for a category
+     */
     public Double calculateBudgetForCategory( Long budgetId) {
         Long userId = UserService.getIdConnectedUser();
         return budgetRepository.calculateBudgetForCategory( userId, budgetId);
     }
 
-    public boolean isBudgetDepasse(Long budgetId) {
+
+        /**
+     * calculate if the budget is over the limit fixed
+     * @param budgetId of the budget
+     * @return true if the budget is over the limit fixed
+     */ public boolean isBudgetDepasse(Long budgetId) {
         Budget budget = budgetRepository.findById(budgetId).orElse(null);
         double progressPercentage = 0;
         Calendar calendar = Calendar.getInstance();
@@ -148,6 +231,10 @@ public class BudgetService {
 
 
 
+    /**
+     * calculate the Adjustments for each category
+     * @return the category with the adjustments
+     */
     public List<Map<String, Object>> calculateAdjustments() {
 
         Calendar calendar = Calendar.getInstance();
