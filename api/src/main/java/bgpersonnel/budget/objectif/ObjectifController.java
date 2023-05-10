@@ -48,13 +48,23 @@ public class ObjectifController {
         return objectifService.findByUser(id);
     }
 
+    /**
+     * Calculate the progress percentage of an objectif
+     * @param id of the objectif
+     * @return the progress percentage
+     */
     @GetMapping("/{id}/progression")
     public ResponseEntity<Double> getProgression(@PathVariable Long id) {
         Double progression = objectifService.calculateProgressPercentage(id);
         return ResponseEntity.ok(progression);
     }
 
-    @GetMapping("/objectifs/{id}/verifier")
+    /**
+     * Check if an objectif is reached
+     * @param id of the objectif
+     * @return true if the objectif is reached, false otherwise
+     */
+    @GetMapping("/verifier/{id}")
     public ResponseEntity<Boolean> isObjectifAtteint(@PathVariable Long id) {
         return ResponseEntity.ok(objectifService.isObjectifAtteint(id));
     }
