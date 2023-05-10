@@ -4,8 +4,8 @@ import bgpersonnel.budget.authentification.common.entity.ERole;
 import bgpersonnel.budget.authentification.common.entity.Role;
 import bgpersonnel.budget.authentification.common.entity.User;
 import bgpersonnel.budget.authentification.refreshtoken.RefreshToken;
-import bgpersonnel.budget.authentification.security.JwtUtils;
 import bgpersonnel.budget.authentification.refreshtoken.RefreshTokenService;
+import bgpersonnel.budget.authentification.security.JwtUtils;
 import bgpersonnel.budget.authentification.security.services.UserDetailsImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
-public class SigninServiceTest {
+class SigninServiceTest {
 
     @InjectMocks
     private SigninService signinService;
@@ -52,13 +52,13 @@ public class SigninServiceTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // Reset SecurityContextHolder before each test
         SecurityContextHolder.setContext(new SecurityContextImpl());
     }
 
     @Test
-    public void testSignIn() {
+    void testSignIn() {
         // Mocking any dependencies or setup necessary for.
         // Test case setup
         LoginRequest loginRequest = new LoginRequest();

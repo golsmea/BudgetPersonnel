@@ -56,9 +56,10 @@ public class SignupService {
         }
 
         strRoles.forEach(role -> {
-            switch (role) {
-                case "admin" -> roles.add(findRoleByNameOrThrow(ERole.ROLE_ADMIN));
-                default -> roles.add(findRoleByNameOrThrow(ERole.ROLE_USER));
+            if (role.equals("admin")) {
+                roles.add(findRoleByNameOrThrow(ERole.ROLE_ADMIN));
+            } else {
+                roles.add(findRoleByNameOrThrow(ERole.ROLE_USER));
             }
         });
 

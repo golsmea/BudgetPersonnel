@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Report</title>
+	<style>
+		table {
+			margin: auto;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		th {
+			background-color: #ddd;
+		}
+
+		th, td {
+			padding: 8px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+		h2 {
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<h2>Liste des transactions</h2>
+	<table>
+		<thead>
+			<tr>
+				<#list header as item>
+					<th>${item}</th>
+				</#list>
+			</tr>
+		</thead>
+		<tbody>
+			<#list data as item>
+				<tr>
+					<td>${item.name}</td>
+					<td>${item.amount}</td>
+					<td>${item.date}</td>
+					<td>${item.description}</td>
+					<td>${item.typeTransaction}</td>
+				</tr>
+			</#list>
+		</tbody>
+	</table>
+</body>
+</html>

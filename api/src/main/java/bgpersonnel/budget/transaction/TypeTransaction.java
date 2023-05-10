@@ -8,6 +8,7 @@ public enum TypeTransaction {
     TypeTransaction(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }

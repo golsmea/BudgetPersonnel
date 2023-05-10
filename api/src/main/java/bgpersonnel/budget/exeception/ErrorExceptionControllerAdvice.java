@@ -16,11 +16,13 @@ public class ErrorExceptionControllerAdvice {
     public ErrorMessageResponse handleTokenRefreshException(TokenRefreshException ex, WebRequest request) {
         return new ErrorMessageResponse(ex.getMessage());
     }
+
     @ExceptionHandler(value = AlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorMessageResponse handleAlreadyExistsException(AlreadyExistsException ex, WebRequest request) {
         return new ErrorMessageResponse(ex.getMessage());
     }
+
     @ExceptionHandler(value = NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorMessageResponse handleNotFoundException(NotFoundException ex, WebRequest request) {

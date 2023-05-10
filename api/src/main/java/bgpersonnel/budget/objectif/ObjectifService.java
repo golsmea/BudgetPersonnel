@@ -2,10 +2,10 @@ package bgpersonnel.budget.objectif;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.*;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
 import java.util.List;
 
 
@@ -102,7 +102,7 @@ public class ObjectifService {
             throw new IllegalArgumentException("Objectif invalide");
         }
         double progressPercentage = calculateProgressPercentage(idObjectif);
-
+      
         //si le pourcentage est supérieur ou égal à 100, l'objectif est atteint
         if(progressPercentage >= 100.0) {
             String subject = "Objectif atteint : " + objectif.getName();
@@ -115,7 +115,7 @@ public class ObjectifService {
             message.setText(text);
             mailSender.send(message);
             return true;
-        }else {
+        } else {
             return false;
         }
     }

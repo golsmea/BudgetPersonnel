@@ -14,7 +14,7 @@ public class SignupController {
     SignupService signUpService;
 
     public SignupController(SignupService signUpService) {
-        signUpService = signUpService;
+        this.signUpService = signUpService;
     }
 
     @PostMapping("/signup")

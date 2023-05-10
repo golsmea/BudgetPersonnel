@@ -12,7 +12,7 @@ import java.util.Optional;
 public class ObjectifController {
 
     @Autowired
-    private ObjectifService objectifService;
+    private final ObjectifService objectifService;
 
     public ObjectifController(ObjectifService objectifService) {
         this.objectifService = objectifService;

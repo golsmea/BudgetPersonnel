@@ -18,6 +18,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public static Long getIdConnectedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        return userDetails.getId();
+    }
+
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User with email " + email + " not found"));
     }
@@ -31,12 +37,6 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         return findUserByEmail(userDetails.getEmail());
-    }
-
-    public static Long getIdConnectedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        return userDetails.getId();
     }
 
     public void saveUser(User user) {

@@ -1,6 +1,5 @@
 package bgpersonnel.budget.category;
 
-import bgpersonnel.budget.transaction.Transaction;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
